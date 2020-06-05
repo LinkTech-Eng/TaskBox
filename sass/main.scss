@@ -1,0 +1,259 @@
+$back: #e0e5ec;
+$light-shadow: rgba(255, 255, 255, 0.527);
+$dark-shadow: #a3b1c68a;
+@mixin shadow {
+  box-shadow: 0.5rem 0.5rem 1rem $dark-shadow,
+    -0.5rem -0.5rem 1rem $light-shadow;
+}
+
+@mixin shadow_inset {
+  box-shadow: inset 0.5rem 0.5rem 1rem $dark-shadow,
+    inset -0.5rem -0.5rem 1rem $light-shadow;
+}
+
+@mixin text_shadow {
+  text-shadow: 0.5rem 0.5rem 1rem $dark-shadow,
+    -0.5rem -0.5rem 1rem $light-shadow;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: $back;
+  font-family: "Railway", sans-serif;
+  user-select: none;
+
+  .origin {
+    width: 370px;
+    height: 700px;
+    position: absolute;
+    border-radius: 20px;
+    @include shadow_inset();
+    pointer-events: none;
+  }
+  .container {
+    width: 340px;
+    height: 670px;
+    border-radius: 20px;
+    position: relative;
+
+    .credit {
+      position: absolute;
+      color: rgb(153, 153, 153);
+      top: 105%;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 1.2rem;
+    }
+
+    .error {
+      position: absolute;
+      top: 35%;
+      text-transform: uppercase;
+      color: rgb(26, 192, 164);
+      font-size: 0.8rem;
+      letter-spacing: 0.1rem;
+      transition: 1s all ease;
+    }
+
+    @include shadow();
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .header {
+      margin-top: 3rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      align-items: center;
+
+      .circle {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        @include shadow();
+        position: relative;
+      }
+
+      .circle::before {
+        content: "";
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        @include shadow_inset();
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        background: $back;
+      }
+
+      p {
+        font-size: 1.3rem;
+        text-transform: uppercase;
+        letter-spacing: 0.9rem;
+        padding: 0.5rem;
+        margin: 4rem 0 1.5rem 0;
+        color: $dark-shadow;
+        padding-left: 2rem;
+      }
+    }
+
+    .main_content {
+      form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+
+        input {
+          width: 28rem;
+          height: 4rem;
+          border: none;
+          @include shadow();
+          background: $back;
+          border-radius: 5rem;
+          padding: 2rem;
+          color: $dark-shadow;
+        }
+        input:focus,
+        input:active,
+        .submit:active,
+        .submit:focus {
+          outline: none !important;
+        }
+
+        input:focus {
+          @include shadow_inset();
+        }
+
+        input::placeholder {
+          color: $dark-shadow;
+          font-size: 1.8rem;
+          text-align: center;
+        }
+
+        .submit {
+          width: 6rem;
+          height: 6rem;
+          border-radius: 50%;
+          margin-top: 3rem;
+          @include shadow();
+          border: none;
+          background: $back;
+          color: $dark-shadow;
+          cursor: pointer;
+          font-size: 2rem;
+          font-weight: lighter;
+        }
+
+        .submit:active {
+          @include shadow_inset();
+          color: rgb(173, 173, 173);
+          cursor: pointer;
+        }
+      }
+
+      .list_wrapper {
+        margin-top: 4rem;
+        padding: 1.5rem 0;
+        height: 28rem;
+        width: 28rem;
+        @include shadow();
+        display: flex;
+        flex-direction: column;
+        border-radius: 20px;
+        overflow: hidden;
+        overflow-y: scroll;
+
+        .todo {
+          margin-top: 1rem;
+          display: flex;
+          color: $dark-shadow;
+          text-transform: capitalize;
+          font-style: italic;
+          font-size: 1.2rem;
+
+          .fas {
+            padding: 0 2rem;
+          }
+
+          .fa-circle {
+            @include text_shadow();
+            color: $light-shadow;
+            font-size: 1rem;
+          }
+
+          .fa-circle:hover {
+            animation: scaling 0.5s 1 forwards;
+          }
+
+          .fa-minus {
+            margin-left: auto;
+            color: rgb(26, 192, 164);
+            cursor: pointer;
+          }
+
+          .fa-minus:active {
+            animation: rotating 0.5s 1 forwards;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
+.inactive {
+  opacity: 0.5;
+  transform: scale(0.99);
+}
+
+@keyframes rotating {
+  0% {
+    transform: rotate(-45deg);
+  }
+  50% {
+    transform: rotate(45deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+@keyframes scaling {
+  0% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+::-webkit-scrollbar {
+  background-color: transparent;
+  border-radius: 50rem;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: $back;
+  border-radius: 30rem;
+  @include shadow();
+}
